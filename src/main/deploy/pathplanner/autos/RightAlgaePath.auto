@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "S_RightAlgaePath"
+            "pathName": "StartRightRightToSide3"
           }
         },
         {
@@ -17,15 +17,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "levelThree"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "F_RightAlgaePath"
+            "pathName": "Side3ToProcessor"
           }
         }
       ]

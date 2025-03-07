@@ -7,6 +7,7 @@ package frc.robot.commands.AlgaeProcessor;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.AlgaeIntakeConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.AlgaeProccessor.AlgaeSubsystem;
 
@@ -31,24 +32,13 @@ public class GrabBall extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double right;
-    double left;
-
-    if(rightDepressed.getAsDouble() < OperatorConstants.RT_DEADBAND) {
-      right = 0;
+    double speed;
+    if(Math.abs(rightDepressed.getAsDouble() - leftDepressed.getAsDouble()) < OperatorConstants.TRIGGER_DEADBAND) {
+      speed = 0;
     } else {
-      right = rightDepressed.getAsDouble();
+      speed = (rightDepressed.getAsDouble() - leftDepressed.getAsDouble()) * AlgaeIntakeConstants.ALGAE_SCALING_FACTOR;
     }
-    if(leftDepressed.getAsDouble() < OperatorConstants.LT_DEADBAND) {
-      left = 0;
-    } else {
-      left = leftDepressed.getAsDouble();
-    }
-
-    double intakeSpeed = (right - left);
-
-    m_subsystem.setIntakeSpeed(intakeSpeed);
-
+    m_subsystem.setFondleSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.

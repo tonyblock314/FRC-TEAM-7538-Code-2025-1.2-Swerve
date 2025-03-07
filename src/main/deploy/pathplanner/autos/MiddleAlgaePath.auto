@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "S_MIddleAlgaePath"
+            "pathName": "MiddleAlgae1"
           }
         },
         {
@@ -17,15 +17,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": null
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "F_MiddleAlgaePath"
+            "pathName": "MiddleAlgae2"
           }
         }
       ]

@@ -2,26 +2,24 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Climber;
+package frc.robot.commands.Arm;
 
-import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ClimberConstants;
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.subsystems.Climber.ClimberSubsystem;
-//import frc.robot.subsystems.Elevator.ElevatorSubsystem;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.subsystems.Arm.ArmSubsystem;
 
-public class Lever extends Command {
+public class JorkingIt extends Command {
   /** Creates a new ClimberSubsystem. */
-  private ClimberSubsystem m_subsystem;
-  //private BooleanSupplier downPressed, upPressed;
-  private DoubleSupplier leftStickY;
-  public Lever(ClimberSubsystem subsystem, DoubleSupplier leftStickY, BooleanSupplier leftStickPressed) {
+  private ArmSubsystem m_subsystem;
+  private DoubleSupplier rightY, rightX;
+  //private BooleanSupplier upPressed, rightPressed, downPressed, leftPressed;
+
+  public JorkingIt(ArmSubsystem subsystem, DoubleSupplier rightY, DoubleSupplier rightX) {
     this.m_subsystem = subsystem;
-    this.leftStickY = leftStickY;
-    //this.upPressed = downPressed;
+    this.rightY = rightY;
+    this.rightX = rightX;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -33,14 +31,15 @@ public class Lever extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed;
-    if(Math.abs(leftStickY.getAsDouble()) < OperatorConstants.LEFT_Y_DEADBAND) {
-      speed = 0;
-    } else {
-      speed = leftStickY.getAsDouble() * ClimberConstants.CLIMBER_SCALING_FACTOR;
+    if (rightY.getAsDouble() > 0.8) {
+      m_subsystem.armPosition(ArmConstants.ARM_UP_POSITION);
+    } else if (rightY.getAsDouble() < -0.8) {
+      m_subsystem.armPosition(ArmConstants.ARM_DOWN_POSITION);
+    } else if (rightX.getAsDouble() > 0.8) {
+      m_subsystem.armPosition(ArmConstants.ARM_INTAKE_POSITION);
+    } else if (rightX.getAsDouble() < -0.8) {
+      m_subsystem.armPosition(ArmConstants.ARM_INTAKE_GROUND_POSITION);
     }
-    m_subsystem.manualOutput(speed);
-    
   }
 
   // Called once the command ends or is interrupted.

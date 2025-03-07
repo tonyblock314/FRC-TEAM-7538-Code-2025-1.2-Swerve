@@ -1,0 +1,68 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Side1ToIntakeLeft"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "StartLeftRightToSide1"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Side3ToIntakeRight"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "StartRightLeftToSide3"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Side4ToIntakeRight"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "StartMiddleToSide2"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 100.0
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "StartMiddleToSide2"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "LeftCoralAuto",
+  "choreoAuto": false
+}

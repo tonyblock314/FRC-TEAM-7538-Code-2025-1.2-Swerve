@@ -7,19 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "StartLeftRightToSide1"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
+            "pathName": "Just Dance"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "LeftCoralAuto",
+  "folder": null,
   "choreoAuto": false
 }

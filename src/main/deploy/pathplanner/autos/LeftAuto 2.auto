@@ -7,13 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "S_L_Path"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": null
+            "pathName": "StartLeftRightToSide1"
           }
         },
         {
@@ -25,13 +19,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "F_L_Path"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": null
+            "pathName": "Side1ToIntakeLeft"
           }
         },
         {
@@ -43,13 +31,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left_S_Path"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": null
+            "pathName": "IntakeLeftToSide6"
           }
         },
         {

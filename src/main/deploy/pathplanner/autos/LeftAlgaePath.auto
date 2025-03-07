@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "S_AlgaePath"
+            "pathName": "StartToSide1"
           }
         },
         {
@@ -17,15 +17,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": null
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "F_AlgaePath"
+            "pathName": "Side1ToDropLongWay"
           }
         }
       ]

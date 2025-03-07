@@ -9,6 +9,7 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.CoralIntakeConstants;
 //import frc.robot.Constants.OperatorConstants;
+//import frc.robot.subsystems.CoralIntake.CoralSubsystem;
 import frc.robot.subsystems.CoralIntake.CoralSubsystem;
 
 public class GrabPole extends Command {
@@ -16,12 +17,12 @@ public class GrabPole extends Command {
   private BooleanSupplier leftPressed, rightPressed;
 
   /** Creates a new GrabPole. */
-  public GrabPole(CoralSubsystem subsystem, BooleanSupplier leftPressed, BooleanSupplier rightPressed) {
-    this.m_subsystem = subsystem;
+  public GrabPole(CoralSubsystem m_coral, BooleanSupplier leftPressed, BooleanSupplier rightPressed) {
+    this.m_subsystem = m_coral;
     this.leftPressed = leftPressed;
     this.rightPressed = rightPressed;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(m_coral);
   }
 
   // Called when the command is initially scheduled.
@@ -31,9 +32,9 @@ public class GrabPole extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double inSpeed = CoralIntakeConstants.CORAL_INTAKE_SPEED;
-    double outSpeed = -CoralIntakeConstants.CORAL_INTAKE_SPEED;
-
+    double inSpeed = CoralIntakeConstants.CORAL_INTAKE_SPEED_IN;
+    double outSpeed = -CoralIntakeConstants.CORAL_INTAKE_SPEED_OUT;
+    
     if (leftPressed.getAsBoolean()) {
       m_subsystem.setIntakeSpeed(outSpeed);
     } else if (rightPressed.getAsBoolean()) {
@@ -41,13 +42,11 @@ public class GrabPole extends Command {
     } else {
       m_subsystem.setIntakeSpeed(0);
     }
-
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_subsystem.setIntakeSpeed(0);
   }
 
   // Returns true when the command should end.

@@ -10,21 +10,19 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.subsystems.Elevator.ElevatorSubsystem;
+import frc.robot.subsystems.Elevator.ElevatorMotionMagicSubsystemRii;
 
 public class UppyDowny extends Command {
-  private ElevatorSubsystem m_subsystem;
+  private ElevatorMotionMagicSubsystemRii m_subsystem;
   private BooleanSupplier xPressed, aPressed, bPressed, yPressed;
-  private DoubleSupplier rightTilt;
 
   /** Creates a new UppyDowny. */
-  public UppyDowny(ElevatorSubsystem subsystem, BooleanSupplier xPressed, BooleanSupplier aPressed, BooleanSupplier bPressed, BooleanSupplier yPressed, DoubleSupplier rightTilt) {
+  public UppyDowny(ElevatorMotionMagicSubsystemRii subsystem, BooleanSupplier xPressed, BooleanSupplier aPressed, BooleanSupplier bPressed, BooleanSupplier yPressed) {
     this.m_subsystem = subsystem;
     this.xPressed = xPressed;
     this.aPressed = aPressed;
     this.bPressed = bPressed;
     this.yPressed = yPressed;
-    this.rightTilt = rightTilt;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -43,9 +41,9 @@ public class UppyDowny extends Command {
     } else if (bPressed.getAsBoolean()) {
       m_subsystem.elevatorPosition(ElevatorConstants.LEVEL_3);
     } else if (yPressed.getAsBoolean()) {
-      m_subsystem.elevatorPosition(ElevatorConstants.LEVEL_4);
+      m_subsystem.elevatorPosition(ElevatorConstants.SOURCE_LEVEL);
     }
-
+/* 
     double eSpeed;
     if(Math.abs(rightTilt.getAsDouble()) < OperatorConstants.RIGHT_Y_DEADBAND) {
       eSpeed = 0;
@@ -56,7 +54,7 @@ public class UppyDowny extends Command {
     eSpeed = (eSpeed) * ElevatorConstants.ELEVATOR_SCALING_FACTOR;
 
     m_subsystem.setElevatorSpeed(eSpeed);
-
+*/
   }
 
   // Called once the command ends or is interrupted.

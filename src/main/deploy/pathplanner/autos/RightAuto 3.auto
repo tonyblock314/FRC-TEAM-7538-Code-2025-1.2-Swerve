@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "S_R_Path"
+            "pathName": "StartRightLeftToSide3"
           }
         },
         {
@@ -17,15 +17,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": null
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "F_R_Path"
+            "pathName": "Side3ToIntakeRight"
           }
         },
         {
@@ -35,15 +29,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": null
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Right_S_Path"
+            "pathName": "IntakeRightToSide4"
           }
         },
         {
@@ -53,15 +41,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": null
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Right_F_Path"
+            "pathName": "Side4ToIntakeRight"
           }
         },
         {
@@ -71,27 +53,15 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": null
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Right_S_Path"
+            "pathName": "IntakeRightToSide4"
           }
         },
         {
           "type": "wait",
           "data": {
             "waitTime": 0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": null
           }
         }
       ]

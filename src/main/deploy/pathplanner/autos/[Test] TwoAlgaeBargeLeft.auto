@@ -1,0 +1,187 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "StartToSide1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Level4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ArmToIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "FondleBalls"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Level1"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Side1ToBarge"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Level4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ArmToDeliver"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ReleaseBalls"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "BargeToSide6"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Level4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ArmToIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "FondleBalls"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Level1"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Side6ToBarge"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Level4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ArmToDeliver"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ReleaseBalls"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "MiddleAlgaeAutos",
+  "choreoAuto": false
+}

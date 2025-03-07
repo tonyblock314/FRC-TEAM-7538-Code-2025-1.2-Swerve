@@ -5,9 +5,16 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "StartLeftRightToSide1"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "StartLeftRightToSide1"
+                }
+              }
+            ]
           }
         },
         {
@@ -17,9 +24,16 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Side1ToIntakeLeft"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Side1ToIntakeLeft"
+                }
+              }
+            ]
           }
         },
         {
@@ -41,9 +55,16 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Side6ToIntakeLeft"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Side6ToIntakeLeft"
+                }
+              }
+            ]
           }
         },
         {
@@ -53,9 +74,16 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "IntakeLeftToSide6"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "IntakeLeftToSide6"
+                }
+              }
+            ]
           }
         },
         {

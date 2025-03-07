@@ -1,5 +1,9 @@
 package frc.robot.subsystems.Climber;
 
+import static edu.wpi.first.units.Units.Kelvin;
+
+import javax.xml.crypto.dsig.keyinfo.KeyValue;
+
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -13,7 +17,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.MotorConstants;;
 
-public class ClimberSubsystem extends SubsystemBase {
+public class ClimberSubsystemRii extends SubsystemBase {
   TalonFX climberMotorL = new TalonFX(MotorConstants.CLIMBER_CAN_ID_LEFT);
   TalonFX climberMotorR = new TalonFX(MotorConstants.CLIMBER_CAN_ID_RIGHT);
   TalonFXConfiguration talonFXConfiguration = new TalonFXConfiguration();
@@ -21,9 +25,10 @@ public class ClimberSubsystem extends SubsystemBase {
   DutyCycleOut outputL = new DutyCycleOut(0);
   DutyCycleOut outputR = new DutyCycleOut(0);
 
-  public ClimberSubsystem() {
+  public ClimberSubsystemRii() {
     var slot0Configs = new Slot0Configs();
     slot0Configs.kG = 9.8; // Output needed to overcome gravity
+    slot0Configs.kV = 1.2; // velocity gain
     slot0Configs.kP = 2.4; // An error of 1 rotation results in 2.4 V output
     slot0Configs.kI = 0; // no output for integrated error
     slot0Configs.kD = 0.1; // A velocity of 1 rps results in 0.1 V output

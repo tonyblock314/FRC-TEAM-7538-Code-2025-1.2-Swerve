@@ -6,21 +6,31 @@ package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Telemetry;
+import frc.robot.Constants.AlgaeIntakeConstants;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.CoralIntakeConstants;
 import frc.robot.SwerveConstants;
 import frc.robot.commands.AlgaeProcessor.GrabBall;
+import frc.robot.commands.Arm.JorkingIt;
 import frc.robot.commands.Climber.Lever;
-import frc.robot.commands.CoralIntake.GrabPole;
 import frc.robot.commands.Elevator.UppyDowny;
+import frc.robot.commands.ManualCommands.ManualArm;
+import frc.robot.commands.ManualCommands.ManualBalls;
+import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AlgaeProccessor.AlgaeSubsystem;
+import frc.robot.subsystems.Arm.ArmSubsystem;
 import frc.robot.subsystems.Climber.ClimberSubsystem;
 import frc.robot.subsystems.CoralIntake.CoralSubsystem;
+import frc.robot.subsystems.Elevator.ElevatorMotionMagicSubsystemRii;
 import frc.robot.subsystems.Elevator.ElevatorSubsystem;
 import frc.robot.subsystems.SwerveDrive.CommandSwerveDrivetrain;
-
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
@@ -33,141 +43,130 @@ import com.pathplanner.lib.auto.AutoBuilder;
 //import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.auto.NamedCommands;
 
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a "declarative" paradigm, very
  * little robot logic should actually be handled in the {@link Robot} periodic methods (other than the scheduler calls).
  * Instead, the structure of the robot (including subsystems, commands, and trigger mappings) should be declared here.
  */
-@SuppressWarnings("unused")
+
+//@SuppressWarnings("unused")
 public class RobotContainer {
   
-  private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
-  private final CoralSubsystem m_coral = new CoralSubsystem();
+  private final ElevatorMotionMagicSubsystemRii m_elevator = new ElevatorMotionMagicSubsystemRii();
   private final AlgaeSubsystem m_algae = new AlgaeSubsystem();
+  private final ArmSubsystem m_arm = new ArmSubsystem();
   private final ClimberSubsystem m_climber = new ClimberSubsystem();
-  public final CommandSwerveDrivetrain drivetrain = SwerveConstants.createDrivetrain();
+  public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
+  private final ManualArm downCommand = new ManualArm(m_arm, ArmConstants.ARM_DOWN_POSITION);
+  private final ManualArm deliverCommand = new ManualArm(m_arm, ArmConstants.ARM_UP_POSITION);
+  private final ManualArm pickUpCommand = new ManualArm(m_arm, ArmConstants.ARM_INTAKE_POSITION);
+  private final ManualBalls fondleBalls = new ManualBalls(m_algae, AlgaeIntakeConstants.AUTO_ALGAE_SPEED);
+  private final ManualBalls releaseBalls = new ManualBalls(m_algae, AlgaeIntakeConstants.AUTO_ALGAE_SPEED);
   
   private double MaxSpeed = SwerveConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
   private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
   /* Setting up bindings for necessary control of the swerve drive platform */
   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-          .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+          .withDeadband(MaxSpeed * 0.05).withRotationalDeadband(MaxAngularRate * 0.05) // Add a 10% deadband
           .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
   private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
   private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
   private final Telemetry logger = new Telemetry(MaxSpeed);
 
-
-  // CommandJoystick rotationController = new CommandJoystick(1);
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  // CommandJoystick driverController = new CommandJoystick(1);
-
   // CommandJoystick driverController   = new CommandJoystick(3);//(OperatorConstants.DRIVER_CONTROLLER_PORT);
-  XboxController driverController = new XboxController(0);
+  CommandXboxController driverController = new CommandXboxController(0);
   XboxController commandsController = new XboxController(1);
 
   // Sendable Chooser Auto Setup
-  SendableChooser<Command> autoChooser = new SendableChooser<>();
+  private final SendableChooser<Command> autoChooser;
+  
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    NamedCommands.registerCommand("levelOne", m_elevator.LevelOne());
-    NamedCommands.registerCommand("levelTwo", m_elevator.LevelTwo());
-    NamedCommands.registerCommand("levelThree", m_elevator.LevelThree());
-    NamedCommands.registerCommand("levelFour", m_elevator.LevelFour());
-    NamedCommands.registerCommand("deliverCoral", m_coral.deliverCoral());
-    NamedCommands.registerCommand("armToDeliver", m_coral.armToDeliver());
-    NamedCommands.registerCommand("armToIntake", m_coral.armToPickup());
-
+    
+    NamedCommands.registerCommand("Level1", m_elevator.LevelOne());
+    NamedCommands.registerCommand("Level2", m_elevator.LevelTwo());
+    NamedCommands.registerCommand("Level3", m_elevator.LevelThree());
+    NamedCommands.registerCommand("Level4", m_elevator.LevelFour());
+    NamedCommands.registerCommand("DeliverCoral", m_algae.deliverAlgae());
+    NamedCommands.registerCommand("ArmToDown", downCommand);
+    NamedCommands.registerCommand("ArmToDeliver", deliverCommand);
+    NamedCommands.registerCommand("ArmToIntake", pickUpCommand);
+    NamedCommands.registerCommand("FondleBalls", fondleBalls);
+    NamedCommands.registerCommand("FondleBalls", releaseBalls);
+    
+    autoChooser = AutoBuilder.buildAutoChooser("Im Jaking It");
+    SmartDashboard.putData("Auto Chooser", autoChooser);
     configureBindings();
   }
 
   private void configureBindings() {
+    
+    /* 
+    driverController.leftBumper().onTrue(runOnce(() -> MaxSpeed = TunerConstants.kSpeedAt12VoltsMps)
+        .andThen(() -> AngularRate));
+    driverController.leftBumper().onFalse(runOnce(() -> MaxSpeed = TunerConstants.kSpeedAt12VoltsMps * speedChooser.getSelected())
+        .andThen(() -> AngularRate = MaxAngularRate));
+    */
     // Note that X is defined as forward according to WPILib convention,
     // and Y is defined as to the left according to WPILib convention.
     drivetrain.setDefaultCommand(
       // Drivetrain will execute this command periodically
       drivetrain.applyRequest(() ->
-          drive.withVelocityX(-driverController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-              .withVelocityY(-driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-              .withRotationalRate(-driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+          drive.withVelocityX(-(driverController.getLeftY() * Math.abs(driverController.getLeftY())) * MaxSpeed) // Drive forward with negative Y (forward)
+              .withVelocityY(-(driverController.getLeftX() * Math.abs(driverController.getLeftX())) * MaxSpeed) // Drive left with negative X (left)
+              .withRotationalRate(-(driverController.getRightX() * Math.abs(driverController.getRightX())) * MaxAngularRate) // Drive counterclockwise with negative X (left)
         )
     );
 
-    if (driverController.getAButton()) {
-      drivetrain.applyRequest(() -> brake);
-    }
+    driverController.a().whileTrue(drivetrain.applyRequest(() -> brake));
+    driverController.b().whileTrue(drivetrain
+        .applyRequest(() -> point.withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))));
 
-    if (driverController.getBButton()) {
-      drivetrain.applyRequest(() -> point.withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX())));
-    }
+    // reset the field-centric heading on start button press
+    driverController.back().and(driverController.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
+    driverController.back().and(driverController.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
+    driverController.start().and(driverController.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
+    driverController.start().and(driverController.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
-    // Run SysId routines when holding back/start and X/Y.
-    // Note that each routine should be run exactly once in a single log.
-    if (driverController.getBackButton() && (driverController.getYButton())) { 
-      drivetrain.sysIdDynamic(Direction.kForward);
-    }
-    if (driverController.getBackButton() && (driverController.getXButton())) {
-      drivetrain.sysIdDynamic(Direction.kReverse);
-    }
-    if (driverController.getStartButton() && (driverController.getYButton())) {
-      drivetrain.sysIdQuasistatic(Direction.kForward);
-    }
-    if (driverController.getStartButton() && (driverController.getXButton())) {
-      drivetrain.sysIdQuasistatic(Direction.kReverse);
-    }
-       
     // reset the field-centric heading on left bumper press
-    if (driverController.getLeftBumper()) {
-      drivetrain.runOnce(() -> drivetrain.seedFieldCentric());
-    }
+    driverController.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+     
 
     drivetrain.registerTelemetry(logger::telemeterize);
     
-    CameraServer.startAutomaticCapture();
-
+    //CameraServer.startAutomaticCapture();
+    
     m_elevator.setDefaultCommand(new UppyDowny(m_elevator,
       commandsController::getXButtonPressed,
       commandsController::getAButtonPressed,
       commandsController::getBButtonPressed,
-      commandsController::getYButtonPressed,
-      commandsController::getRightY
+      commandsController::getYButtonPressed
     ));
-    m_coral.setDefaultCommand(new GrabPole(m_coral,
-      commandsController::getLeftBumperButtonPressed,
-      commandsController::getRightBumperButtonPressed
+    m_arm.setDefaultCommand(new JorkingIt(m_arm, 
+      commandsController::getRightY,
+      commandsController::getRightX
+    ));
+    /* 
+    m_coral.setDefaultCommand(new GrabPolePhillip(m_coral,
+      commandsController::getLeftBumperButton,
+      commandsController::getRightBumperButton
       ));
+    */
     m_algae.setDefaultCommand(new GrabBall(m_algae,
       commandsController::getLeftTriggerAxis,
       commandsController::getRightTriggerAxis
       ));
     m_climber.setDefaultCommand(new Lever(m_climber,
-    commandsController::getLeftStickButtonPressed,
-    commandsController::getRightStickButtonPressed
+      commandsController::getLeftY,
+      commandsController::getLeftStickButtonPressed
     ));
-    // Configure the trigger bindings
-    configureBindings();
-
-    //drivebase.setupPathPlanner();
-    autoChooser = AutoBuilder.buildAutoChooser();
-    SmartDashboard.putData("Auto Chooser", autoChooser);
-
-    autoChooser.setDefaultOption("Auto 2", getAutonomousCommand());
-    autoChooser.addOption("LeftAlgaePath", getAutonomousCommand());
-    autoChooser.addOption("LeftAlgaePath", getAutonomousCommand());
-    autoChooser.addOption("LeftAuto 1", getAutonomousCommand());
-    autoChooser.addOption("LeftAuto 2", getAutonomousCommand());
-    autoChooser.addOption("LeftAuto 3", getAutonomousCommand());
-    autoChooser.addOption("MiddleAlgaePath", getAutonomousCommand());
-    autoChooser.addOption("RightAlgaePath", getAutonomousCommand());
-    autoChooser.addOption("RightAuto 1", getAutonomousCommand());
-    autoChooser.addOption("RightAuto 2", getAutonomousCommand());
-    autoChooser.addOption("RightAuto 3", getAutonomousCommand());
   }
 
   /**
@@ -187,5 +186,6 @@ public class RobotContainer {
   {
     // An example command will be run in autonomous
     return autoChooser.getSelected();
+    //return Commands.print("No autonomous command configured");
   }
 }

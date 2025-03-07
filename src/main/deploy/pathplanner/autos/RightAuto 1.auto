@@ -7,13 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "S_R_Path"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": null
+            "pathName": "StartRightLeftToSide3"
           }
         },
         {

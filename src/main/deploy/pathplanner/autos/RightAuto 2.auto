@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "S_R_Path"
+            "pathName": "StartRightLeftToSide3"
           }
         },
         {
@@ -17,15 +17,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": null
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "F_R_Path"
+            "pathName": "Side3ToIntakeRight"
           }
         },
         {
@@ -35,21 +29,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": null
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Right_S_Path"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": null
+            "pathName": "IntakeRightToSide4"
           }
         }
       ]

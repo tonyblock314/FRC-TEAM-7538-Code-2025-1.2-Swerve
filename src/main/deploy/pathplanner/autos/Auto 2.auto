@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "MidPath"
+            "pathName": "StartMiddleToSide2"
           }
         },
         {
@@ -17,9 +17,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": null
+            "waitTime": 1.0
           }
         }
       ]

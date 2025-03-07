@@ -1,0 +1,70 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.708094262295082,
+        "y": 4.744262295081968
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.032653328269977,
+        "y": 5.3335450946269365
+      },
+      "isLocked": false,
+      "linkedName": "Barge"
+    },
+    {
+      "anchor": {
+        "x": 4.843032786885245,
+        "y": 5.943032786885246
+      },
+      "prevControl": {
+        "x": 5.608883739354889,
+        "y": 6.0443085444096365
+      },
+      "nextControl": {
+        "x": 4.5951904402594455,
+        "y": 5.910258235492173
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.812090163934426,
+        "y": 5.18780737704918
+      },
+      "prevControl": {
+        "x": 4.3643634706787,
+        "y": 5.80609642394972
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Side6"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 6.0,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -59.99999999999999
+  },
+  "reversed": false,
+  "folder": "LeftAlgaePath",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -0.0
+  },
+  "useDefaultConstraints": true
+}
